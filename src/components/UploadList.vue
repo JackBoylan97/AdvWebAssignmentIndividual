@@ -1,9 +1,12 @@
 <template>
     <div class="jumbotron text-left">
-      <div v-for="value in userSubmissions" :key="value">
-        {{value}}
-        </div>
+      <div v-for="subs in userSubmissions" :key="subs">
+        {{subs.uploadTitle}}
+        {{subs.uploadDetails}}
+        {{subs.tags}}
+    </div>
   </div>
+<button  @click="doSomething">Do it</button>
 </template>
 <script>
 // @ is an alias to /src
@@ -31,13 +34,7 @@ export default {
         this.userSubmissions = userSubmissions
         console.log(this.userSubmissions)
         
-
-      },
-      beforeCreate() {
-        this.doSomething()
-      }
-
-      
+      }   
   }
 }
 </script>

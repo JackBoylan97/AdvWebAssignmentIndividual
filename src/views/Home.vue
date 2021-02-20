@@ -27,7 +27,7 @@
 <script>
 // @ is an alias to /src
 import {ref} from "vue";
-import { firebaseFireStore, firebaseAuthentication } from "@/firebase/database";
+import {firebaseAuthentication } from "@/firebase/database";
 import UserUploadData from '../components/UserUploadData'
 
 
@@ -45,13 +45,7 @@ export default {
     const user = ref(firebaseAuthentication.currentUser);
    
 
-    firebaseFireStore
-    .collection("users")
-    .doc("jlPv0nW8LxObHkzg7Gug")
-    .get()
-    .then((snapshot) => {
-      console.log(snapshot.data().name);
-    });
+   
     
   
     firebaseAuthentication.onAuthStateChanged(user => {

@@ -1,10 +1,11 @@
 <template>
   <div class="graph">
     <div class="jumbotron text-left">
-  <h1>About Cardiomyopathy </h1> 
-  <br>
+  <h1> Uploads </h1>
+  <div v-if="user"> 
+    <UploadList /> 
 
-  <UploadList />
+  </div>
 
   </div>
 
@@ -13,31 +14,33 @@
 </template>
 <script>
 // @ is an alias to /src
-import UploadList from '@/components/UploadList'
+import {ref} from "vue";
+import {firebaseAuthentication } from "@/firebase/database";
+import UploadList from '../components/UploadList'
 export default {
-  data() {
-      return{
-        show: true,
-        userSubmissions:[{
-          title: '',
-          details: '',
-          graph: '',
-          tags: ''
-
-        }],
-      }
-  },
+  name: 'Home',
   components: {
     UploadList
-     
-    },
-  methods: {
-      }
+  },
+
+  setup(){
+
+    const user = ref(firebaseAuthentication.currentUser);
+   
+
+  
+    firebaseAuthentication.onAuthStateChanged(user => {
+      user.value = user;
+    });
+
+
+    return {user};
   }
 
+
+}
+
 </script>
-
-
 
 
 
