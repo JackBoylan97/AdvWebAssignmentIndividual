@@ -1,15 +1,25 @@
 <template>
     <div class="jumbotron text-left">
-      <div v-for="subs in userSubmissions" :key="subs">
-        {{subs.uploadTitle}}
-        {{subs.uploadDetails}}
-        {{subs.tags}}
-    </div>
+      <table style="width:100%" >
+  <tr>
+    <th>Title</th>
+    <th>Details</th>
+    <th>Tags</th>
+    <th> Graph</th>
+  </tr>
+  <tr v-for="subs in userSubmissions" :key="subs" >
+    <td>{{subs.uploadTitle}}</td>
+    <td> {{subs.uploadDetails}}</td>
+    <td> {{subs.tags}}</td>
+    <td v-if="load"> <graph-creator v-bind:userSubmissions="userSubmissions"/></td>
+  </tr>
+</table>
   </div>
 <button  @click="doSomething">Do it</button>
 </template>
 <script>
 // @ is an alias to /src
+import GraphCreator from '../components/GraphCreator'
 import { getAllSubmissions } from "../firebase/database.js"
 export default {
   
@@ -22,10 +32,11 @@ export default {
           tags: ''
 
         }],
+        load: false
       }
   },
   components: {
-     
+     GraphCreator
     },
   methods: {
       async doSomething(){
@@ -33,6 +44,7 @@ export default {
 
         this.userSubmissions = userSubmissions
         console.log(this.userSubmissions)
+        this.load = true
         
       }   
   }

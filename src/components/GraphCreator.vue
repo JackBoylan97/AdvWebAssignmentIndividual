@@ -1,12 +1,11 @@
 <template>
   <div>
-    
     <apexchart
       type="line"
-      height="350"
-      width="500"
+      height="175"
+      width="250"
       :options="chartOptions"
-      :series="series"
+      :series="series"      
     ></apexchart>
   </div>
 </template>
@@ -15,6 +14,7 @@
 import { ref } from "vue";
 
 export default {
+  props: ['userSubmissions'],
   setup() {
     const chartOptions = ref({
       chart: {
@@ -66,7 +66,7 @@ export default {
       },
       {
         name: "",
-        data: [20, 61, 75, 71, 69, 72, 89, 111, 168],
+        data: [],
       },
     ]);
 
