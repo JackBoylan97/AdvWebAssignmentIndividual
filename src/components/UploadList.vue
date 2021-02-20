@@ -1,38 +1,56 @@
 <template>
-  <div class="cart mt-4">
-    <table class="table m-0">
-    <thead>
-      <h1> My uploads</h1>
-      <tr> 
-        <th scope="col">Title</th>
-        <th scope="col">Details</th>
-        <th scope="col">Graph</th>
-        <th scope="col">Tags</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="{userId,uploadTitle, uploadDetails, tags, timestamp} in uploads" :key="userId">
-      <td> {{uploadTitle}}</td>
-      <td> {{uploadDetails}}</td>
-      <td> {{tags}}</td>
-      <td>{{timestamp}}</td>
-      <td>
-        <button class= "btn btn-danger btn-sm">
-          Delete
-        </button>
-      </td>
-      </tr>
-      </tbody> 
-      </table>
+    <div class="jumbotron text-left">
+      <div v-for="value in userSubmissions" :key="value">
+        {{value}}
         </div>
+  </div>
 </template>
 <script>
-import {getAllSubmissions} from '../firebase/database.js'
+// @ is an alias to /src
+import { getAllSubmissions } from "../firebase/database.js"
 export default {
-  setup(){
-    const uploads = getAllSubmissions()
-    return {uploads}
+  
+  data() {
+      return{
+        userSubmissions:[{
+          title: '',
+          details: '',
+          graph: '',
+          tags: ''
 
-}
+        }],
+      }
+  },
+  components: {
+     
+    },
+  methods: {
+      async doSomething(){
+      const userSubmissions = await getAllSubmissions()
+
+        this.userSubmissions = userSubmissions
+        console.log(this.userSubmissions)
+        
+
+      },
+      beforeCreate() {
+        this.doSomething()
+      }
+
+      
+  }
 }
 </script>
+
+
+
+
+
+<style scoped>
+  .jumbotron {
+    background-color: #5f75f1;
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+  }
+</style>

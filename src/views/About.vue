@@ -8,7 +8,7 @@
     This affects the heart's ability to pump blood around the body.</p> 
     <p>The abnormal heart muscle seen in cardiomyopathy is not caused by blocked arteries in the heart (coronary artery disease), 
       high blood pressure (hypertension), disease of the heart valves (valvular disease) or congenital heart disease.
-      Most types of cardiomyopathy are inherited and are seen in children and younger people.</p>
+      Most types of cardiomyopathy are inherited and are seen in children and younger people.</p>k
   </div>
   </div>
 

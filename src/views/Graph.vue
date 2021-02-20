@@ -3,17 +3,21 @@
     <div class="jumbotron text-left">
   <h1>About Cardiomyopathy </h1> 
   <br>
-  <button @click="doSomething()"></button>
-{{userSubmissions}}
-   </div>
+
+  <UploadList />
+
   </div>
+
+   </div>
+
 </template>
 <script>
 // @ is an alias to /src
-import { getAllSubmissions } from "../firebase/database.js"
+import UploadList from '@/components/UploadList'
 export default {
   data() {
       return{
+        show: true,
         userSubmissions:[{
           title: '',
           details: '',
@@ -24,20 +28,13 @@ export default {
       }
   },
   components: {
+    UploadList
      
     },
   methods: {
-      async doSomething(){
-      const userSubmissions = await getAllSubmissions()
-
-        this.userSubmissions = userSubmissions
-        
-      },
-      graphCreator(){
-
       }
   }
-}
+
 </script>
 
 
