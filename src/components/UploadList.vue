@@ -1,6 +1,6 @@
 <template>
     <div class="jumbotron text-left">
-      <table style="width:100%" >
+      <table v-if="load" style="width:100%" >
   <tr>
     <th>Title</th>
     <th>Details</th>
@@ -11,7 +11,7 @@
     <td>{{subs.uploadTitle}}</td>
     <td> {{subs.uploadDetails}}</td>
     <td> {{subs.tags}}</td>
-    <td v-if="load"> <graph-creator v-bind:userSubmissions="userSubmissions"/></td>
+    <td> <graph-creator v-bind:userSubmissions="subs"/></td>
   </tr>
 </table>
   </div>
@@ -25,21 +25,18 @@ export default {
   
   data() {
       return{
-        userSubmissions:[{
-          title: '',
-          details: '',
-          graph: '',
-          tags: ''
-
-        }],
+        userSubmissions:[],
         load: false
       }
   },
   components: {
      GraphCreator
     },
+    mounted(){
+      this.getInfo()
+    },
   methods: {
-      async doSomething(){
+      async getInfo(){
       const userSubmissions = await getAllSubmissions()
 
         this.userSubmissions = userSubmissions

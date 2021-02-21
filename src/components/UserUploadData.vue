@@ -49,8 +49,14 @@ const initForm = {
   validData: true,
   tags: [],
   availability: {
-    column1: [],
-    column2: [],
+    col1: {
+      title: '',
+      rows:[]
+    },
+    col2: {
+    title: '',
+    rows: []
+    }
   },
   createdAt: timestamp(),
 };
@@ -82,15 +88,24 @@ export default {
       Papa.parse(file, {
         header: true,
         complete: (results) => {
+          console.log(results.data)
           results.data.pop()
           if(Object.keys(results.data[1]).length !== 2) {
             this.submission.validData = false;
             alert("The file you have uploaded contains more or less than two columns! Please add a file with two columns");
             return;
+          }else{
+            this.submission.validData = true;
           }
-          this.submission.availability ={
-            column1: results.data.map((item)=> item [results.meta.fields[0]]),
-            column2: results.data.map((item)=> item [results.meta.fields[1]])
+        this.submission.availability ={
+            col1: { 
+              rows: results.data.map((item)=> item [results.meta.fields[0]]),
+              title: results.meta.fields[0]
+            },
+            col2: { 
+              rows: results.data.map((item)=> item [results.meta.fields[1]]), 
+              title: results.meta.fields[1]
+            }
           }
           console.log(this.submission.availability)
         },

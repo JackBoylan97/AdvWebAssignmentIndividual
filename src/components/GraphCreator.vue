@@ -15,8 +15,9 @@ import { ref } from "vue";
 
 export default {
   props: ['userSubmissions'],
-  setup() {
+  setup(props) {
     const chartOptions = ref({
+      
       chart: {
         height: 350,
         type: "line",
@@ -31,7 +32,7 @@ export default {
         curve: "straight",
       },
       title: {
-        text: "Product Trends by Month",
+        text: props.userSubmissions.uploadTitle,
         align: "left",
       },
       grid: {
@@ -42,12 +43,13 @@ export default {
       },
       xaxis: {
         title: {
-          text: "Month",
+          text: props.userSubmissions.availability.col2.title,
         },
       },
       yaxis: {
         title: {
-          text: "Desktops",
+          text: props.userSubmissions.availability.col1.title,
+
         },
       },
       legend: {
@@ -61,16 +63,22 @@ export default {
 
     const series = ref([
       {
-        name: "",
-        data: [],
+        name: props.userSubmissions.availability.col1.title,
+        data: props.userSubmissions.availability.col1.rows
       },
       {
-        name: "",
-        data: [],
+        name: props.userSubmissions.availability.col2.title,
+        data: props.userSubmissions.availability.col2.rows
       },
+    
     ]);
 
     return { chartOptions, series };
   },
+  methods: {
+    createGraph(){
+      
+    }
+  }
 };
 </script>
