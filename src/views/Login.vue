@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <div class="jumbotron text-center">
+  <div v-if="!user" class="login">
+    <div  class="jumbotron text-center">
   <h1>Login {{ user }} </h1> 
   </div>
   <div class="text-center">
@@ -65,6 +65,7 @@ export default {
     const email = ref("");
     const password = ref("");
     const errorFirebase = ref(null);
+    const user = ref(firebaseAuthentication.currentUser);
 
     const router = useRouter();
 
@@ -85,7 +86,11 @@ export default {
       });
     }
 
-    return {email, password,errorFirebase, login};
+    firebaseAuthentication.onAuthStateChanged(user => {
+      user.value = user;
+    });
+
+    return {user, email, password,errorFirebase, login};
     
 
   },
