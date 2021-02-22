@@ -7,12 +7,12 @@
         <th>Tags</th>
         <th>Graph</th>
       </tr>
-      <tr v-for="subs in userSubmissions" :key="subs">
+      <tr v-for="(subs, index) in userSubmissions" :key="index">
         <td>{{ subs.uploadTitle }}</td>
         <td>{{ subs.uploadDetails }}</td>
         <td>{{ subs.tags }}</td>
         <td><graph-creator v-bind:userSubmissions="subs" /></td>
-        <td><button @click="deleteSelected(subs)"></button></td>
+        <td><button @click="deleteSelected(subs, index)">Delete</button></td>
       </tr>
     </table>
   </div>
@@ -20,7 +20,10 @@
 <script>
 // @ is an alias to /src
 import GraphCreator from "../components/GraphCreator";
-import { getAllSubmissions, deleteUserSubmission} from "../firebase/database.js";
+import {
+  getAllSubmissions,
+  deleteUserSubmission,
+} from "../firebase/database.js";
 export default {
   data() {
     return {
@@ -41,12 +44,21 @@ export default {
       this.userSubmissions = userSubmissions;
       this.load = true;
     },
-      deleteSelected(e) {
-        const selectedDoc = e.tags
-        console.log(selectedDoc)
-        deleteUserSubmission(selectedDoc)
-        return;
+    deleteSelected(e, b) {
+      if(confirm("Are you sure you want to delete? This cannot be undone!")== true){
+      const selectedDoc = e.tags;
+      console.log(selectedDoc);
+      deleteUserSubmission(selectedDoc);
+      this.removeElement(b);
+      return;
+      }else{
+        return false;
       }
+      
+    },
+    removeElement(b) {
+      this.userSubmissions.splice(b, 1);
+    },
   },
 };
 </script>
