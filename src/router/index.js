@@ -6,7 +6,6 @@ import Login from '../views/Login.vue'
 import Contact from '../views/Contact.vue'
 import Register from '../views/Register.vue'
 import Forgot from '../views/Forgot.vue'
-import Search from '../views/Search.vue'
 
 
 const routes = [
@@ -53,13 +52,7 @@ const routes = [
   {
     path:'/:catchAll(.*)',
     redirect:'/',
-  },
-  {
-    path:'/search',
-    name:'Search',
-    component: Search
   }
-
 
 ]
 
