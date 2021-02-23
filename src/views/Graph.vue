@@ -18,7 +18,7 @@ import {ref} from "vue";
 import {firebaseAuthentication } from "@/firebase/database";
 import UploadList from '../components/UploadList'
 export default {
-  name: 'Home',
+  name: 'Search',
   components: {
     UploadList
   },

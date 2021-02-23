@@ -19,6 +19,7 @@
       <ul class="nav navbar-nav navbar-right">
         <!--link to each view through routing -->
         <li><router-link to="/home">HOME</router-link></li>
+        <li><router-link to="/search"> SEARCH</router-link></li>
         <li><router-link to="/about">ABOUT</router-link></li>
         <li><router-link to="/graph">GRAPH</router-link></li>
         <li><router-link to="/contact">CONTACT</router-link></li>

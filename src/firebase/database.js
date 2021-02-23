@@ -33,6 +33,10 @@ export const createSubmission = (submission) => {
     .add(submission);
 };
 
+export const firestoreQuery = async () => {
+  userSubmissions.where('')
+}
+
 export const deleteUserSubmission = async (selectedDoc) => {
   userSubmissions.doc(firebaseAuthentication.currentUser.uid)
     .collection("submissions")

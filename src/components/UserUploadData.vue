@@ -29,6 +29,8 @@
         />
       </div>
       <div>
+        Here you can add tags such as gene types etc. Seperate your tags by adding a comma, you can 
+        delete tags by simply clicking them. 
         <input type="text" v-model="submission.tempTag" @keydown="addTag" />
       </div>
       <div v-for="tag in submission.tags" :key="tag" class="pill">

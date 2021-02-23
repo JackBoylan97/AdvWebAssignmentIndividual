@@ -58,6 +58,7 @@ export default {
     },
     removeElement(b) {
       this.userSubmissions.splice(b, 1);
+      alert("Deleted")
     },
   },
 };
