@@ -33,15 +33,23 @@ export const createSubmission = (submission) => {
     .add(submission);
 };
 
-export const firestoreQuery = async () => {
-  userSubmissions.where('')
-}
+export const firestoreQuery = async (internalResults) => {
+  const query =  await firebaseFireStore
+    .collectionGroup("submissions")
+    .where("tags", "array-contains", internalResults).get();
+      return query.docs.map((doc)=>{
+        return doc.data();
+      });
+  };
 
 export const deleteUserSubmission = async (selectedDoc) => {
-  userSubmissions.doc(firebaseAuthentication.currentUser.uid)
+  userSubmissions
+    .doc(firebaseAuthentication.currentUser.uid)
     .collection("submissions")
-    .where("tags", "==", selectedDoc).get().then((qSnap)=>{
-       qSnap.docs.forEach(doc => doc.ref.delete())
+    .where("tags", "==", selectedDoc)
+    .get()
+    .then((qSnap) => {
+      qSnap.docs.forEach((doc) => doc.ref.delete());
     });
 };
 

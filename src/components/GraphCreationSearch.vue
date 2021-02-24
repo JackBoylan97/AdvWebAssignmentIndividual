@@ -5,7 +5,7 @@
       height="175"
       width="250"
       :options="chartOptions"
-      :series="series"      
+      :series="series"
     ></apexchart>
   </div>
 </template>
@@ -14,10 +14,9 @@
 import { ref } from "vue";
 
 export default {
-  props: ['userSubmissions','searchResult'],
+  props: ["searchResult"],
   setup(props) {
     const chartOptions = ref({
-      
       chart: {
         height: 350,
         type: "line",
@@ -32,7 +31,7 @@ export default {
         curve: "straight",
       },
       title: {
-        text: props.userSubmissions.uploadTitle,
+        text: props.searchResult.uploadTitle,
         align: "left",
       },
       grid: {
@@ -43,13 +42,12 @@ export default {
       },
       xaxis: {
         title: {
-          text: props.userSubmissions.availability.col2.title,
+          text: props.searchResult.availability.col2.title,
         },
       },
       yaxis: {
         title: {
-          text: props.userSubmissions.availability.col1.title,
-
+          text: props.searchResult.availability.col1.title,
         },
       },
       legend: {
@@ -63,22 +61,19 @@ export default {
 
     const series = ref([
       {
-        name: props.userSubmissions.availability.col1.title,
-        data: props.userSubmissions.availability.col1.rows
+        name: props.searchResult.availability.col1.title,
+        data: props.searchResult.availability.col1.rows,
       },
       {
-        name: props.userSubmissions.availability.col2.title,
-        data: props.userSubmissions.availability.col2.rows
+        name: props.searchResult.availability.col2.title,
+        data: props.searchResult.availability.col2.rows,
       },
-    
     ]);
 
     return { chartOptions, series };
   },
   methods: {
-    createGraph(){
-      
-    }
-  }
+    createGraph() {},
+  },
 };
 </script>

@@ -9,48 +9,50 @@
         <option>MYBPC3</option>
         <option>TPM1</option>
       </select>
-      <span>Selected: {{selected}}</span>
-      <button @click="populateDiseaseList()">SEARCH </button>
+      <span>Selected: {{ selected }}</span>
+      <button @click="populateDiseaseList()">SEARCH</button>
     </div>
 
-   <SearchList v-if="somethingEntered" v-bind:results="results"/>
-   </div>
+    <SearchList
+      v-if="results && internalResults && somethingEntered == true"
+      :results="results"
+      :internalResults="internalResults"
+    />
+  </div>
 </template>
 
 <script>
-import SearchList from '../components/SearchList'
+import SearchList from "../components/SearchList";
+import { firestoreQuery } from "../firebase/database";
 export default {
-
   components: {
-    SearchList
+    SearchList,
   },
   data() {
-    return{
-      results: '',
-      selected: '',
+    return {
+      results: undefined,
+      internalResults: undefined,
+      selected: "",
       somethingEntered: false,
-      geneType: '',
-      diseaseList: '',
+      geneType: "",
+      diseaseList: "",
       disease_base_url: "https://hpo.jax.org/api/hpo/disease",
-      error: ''
-    }
+      error: "",
+    };
   },
   methods: {
-   async populateDiseaseList() {
-      if (this.selected === 'TNNT') {
-      this.geneType = 'OMIM:601494';
-      }
-      else if (this.selected === 'MYH') {
-      this.geneType = 'OMIM:192600';
-      }
-      else if (this.selected === 'MYBPC3'){
-       this.geneType = 'OMIM:115197';
-      }
-      else{
-        this.geneType ='OMIM:115196'
+    async populateDiseaseList() {
+      if (this.selected === "TNNT") {
+        this.geneType = "OMIM:601494";
+      } else if (this.selected === "MYH") {
+        this.geneType = "OMIM:192600";
+      } else if (this.selected === "MYBPC3") {
+        this.geneType = "OMIM:115197";
+      } else {
+        this.geneType = "OMIM:115196";
       }
 
-      const disease_list_url = this.disease_base_url + "/" +this.geneType
+      const disease_list_url = this.disease_base_url + "/" + this.geneType;
 
       try {
         let disease_data = await fetch(disease_list_url);
@@ -59,31 +61,38 @@ export default {
         }
 
         this.diseaseList = await disease_data.json();
-        this.results = this.diseaseList
-        console.log(this.results)
-      this.somethingEntered=true
+        this.results = this.diseaseList;
+        console.log(this.results);
+        this.internalResults = this.selected;
+        this.checkInternal(this.internalResults);
+
         console.log("it didnt catch");
       } catch (error) {
         console.log("it caught");
       }
-    }
-  }
+    },
+    async checkInternal(selected) {
+      const queryResult = await firestoreQuery(selected);
+      this.internalResults = queryResult;
+      this.somethingEntered = true;
+    },
+  },
 };
 </script>
 
 <style scoped>
 .input-container {
-	border-radius: 5px;
-	background: #677482;
-	padding: 10px;
+  border-radius: 5px;
+  background: #677482;
+  padding: 10px;
 }
 .input-container input {
-	border: none;
+  border: none;
   font-style: black;
-	background: transparent;
-	color: white;
-	padding: 6px 15px;
-	font-size: 18px;
+  background: transparent;
+  color: white;
+  padding: 6px 15px;
+  font-size: 18px;
 }
 
 .jumbotron {

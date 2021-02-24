@@ -1,25 +1,37 @@
 <template>
+  <h1>{{ results.disease.diseaseName }}</h1>
   <div>
-    <div v-for="disease in results" :key="disease.diseaseName">
-      <h1>{{ disease.diseaseName }}</h1>
+    <h2 v-on:click="isHidden = !isHidden">Symptoms</h2>
+  </div>
+  <div v-if="isHidden">
+    <div v-for="item in results.catTermsMap" :key="item" class="#this">
+      <h4>{{ item.catLabel }}</h4>
 
-      
-      <div v-for="symptoms in disease" :key="symptoms">
-        <div v-for="name in symptoms.terms" :key="name">
-          <h4>{{ name.name }}</h4>
-          <span>{{ name.definition }}</span>
-        </div>
+      <div v-for="detail in item.terms" :key="detail">
+        <h5>{{ detail.name }}</h5>
+        <h6>{{ detail.definition }}</h6>
       </div>
-      <div></div>
     </div>
   </div>
+  <div v-for="result in internalResults" :key="result">
+    <p>{{ result.uploadTitle }}</p>
+    <p>{{ result.uploadDetails }}</p>
+    <p><graph-creation-search v-bind:searchResult="result" /></p>
+  </div>
 </template>
-
 <script>
+import GraphCreationSearch from "../components/GraphCreationSearch";
 export default {
-  props: ["results"],
+  props: ["results", "internalResults"],
   data() {
-    return {};
+    return {
+      isHidden: false,
+      subHidden: false,
+    };
+  },
+  components: {
+    GraphCreationSearch,
   },
   methods: {},
 };
+</script>
