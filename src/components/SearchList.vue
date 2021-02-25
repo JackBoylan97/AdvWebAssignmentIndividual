@@ -17,12 +17,11 @@
       </div>
     </div>
   </div>
+     <h2> Internal Results</h2>
   <div v-for="result in internalResults" :key="result">
-   
  <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-    <h2> Internal Results</h2>
+ 
      <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-
     <h3>Title:  {{ result.uploadTitle }}</h3>
     <h3> Details:  {{result.uploadDetails }}</h3>
     <h3>Graph:</h3>
