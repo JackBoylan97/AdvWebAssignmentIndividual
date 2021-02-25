@@ -3,6 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
   apiKey: "AIzaSyAGDp5Pf4L0JdY2BywfxDI88Abwy09i4G4",
   authDomain: "adv-web-assignment.firebaseapp.com",
@@ -14,6 +15,7 @@ const firebaseConfig = {
   appId: "1:831433916933:web:c5d9e0caa636c03ebb126c",
   measurementId: "G-J43RTZD1CW",
 };
+
 
 // Initalize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -32,7 +34,6 @@ export const createSubmission = (submission) => {
     .collection("submissions")
     .add(submission);
 };
-
 export const firestoreQuery = async (internalResults) => {
   const query =  await firebaseFireStore
     .collectionGroup("submissions")
@@ -43,13 +44,10 @@ export const firestoreQuery = async (internalResults) => {
   };
 
 export const deleteUserSubmission = async (selectedDoc) => {
-  userSubmissions
-    .doc(firebaseAuthentication.currentUser.uid)
+  userSubmissions.doc(firebaseAuthentication.currentUser.uid)
     .collection("submissions")
-    .where("tags", "==", selectedDoc)
-    .get()
-    .then((qSnap) => {
-      qSnap.docs.forEach((doc) => doc.ref.delete());
+    .where("tags", "==", selectedDoc).get().then((qSnap)=>{
+       qSnap.docs.forEach(doc => doc.ref.delete())
     });
 };
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="jumbotron text-left">
-    <table v-if="load" style="width:100%">
+
+    <table v-if="load" style="width:80%; color: white; font-size: 46px;">
       <tr>
-        <th>Title</th>
+        <th style="color:white;">Title</th>
         <th>Details</th>
         <th>Tags</th>
         <th>Graph</th>
@@ -12,19 +12,35 @@
         <td>{{ subs.uploadDetails }}</td>
         <td>{{ subs.tags }}</td>
         <td><graph-creator v-bind:userSubmissions="subs" /></td>
-        <td><button @click="deleteSelected(subs, index)">Delete</button></td>
+        <td><button  class="btn btn-success" @click="deleteSelected(subs, index)">Delete</button></td>
       </tr>
     </table>
-  </div>
+    
 </template>
 <script>
 // @ is an alias to /src
 import GraphCreator from "../components/GraphCreator";
+import emailjs from 'emailjs-com';
+import {ref} from "vue";
+import {firebaseAuthentication } from "@/firebase/database";
+
 import {
   getAllSubmissions,
   deleteUserSubmission,
 } from "../firebase/database.js";
 export default {
+
+  setup(){
+
+    const user = ref(firebaseAuthentication.currentUser.email);
+
+
+
+    return {user}
+  },
+
+  
+
   data() {
     return {
       userSubmissions: [],
@@ -45,7 +61,13 @@ export default {
       this.load = true;
     },
     deleteSelected(e, b) {
+          console.log(this.user);
       if(confirm("Are you sure you want to delete? This cannot be undone!")== true){
+        var templateParams = {
+            email: this.user
+            };
+        emailjs.send("service_cswgxab","template_dbwr4bk",templateParams,"user_TfsemkgXGUUnBYOXERVQC");
+        
       const selectedDoc = e.tags;
       console.log(selectedDoc);
       deleteUserSubmission(selectedDoc);
@@ -58,17 +80,14 @@ export default {
     },
     removeElement(b) {
       this.userSubmissions.splice(b, 1);
-      alert("Deleted")
     },
   },
 };
 </script>
 
 <style scoped>
-.jumbotron {
-  background-color: #5f75f1;
-  color: #fff;
-  padding: 100px 25px;
-  font-family: Montserrat, sans-serif;
+table{
+  text-align: left;
 }
+
 </style>

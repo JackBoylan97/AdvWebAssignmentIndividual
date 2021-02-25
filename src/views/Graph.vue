@@ -1,16 +1,17 @@
 <template>
+<div>
+  <div class="jumbotron text-left">
+    <h1> Uploads </h1>
+  </div>
+
+  
+
   <div class="graph">
-    <div class="jumbotron text-left">
-  <h1> Uploads </h1>
-  <div v-if="user"> 
-    <UploadList /> 
-
+      <div v-if="user"> 
+          <UploadList /> 
+      </div>
   </div>
-
-  </div>
-
-   </div>
-
+</div>
 </template>
 <script>
 // @ is an alias to /src
@@ -18,7 +19,7 @@ import {ref} from "vue";
 import {firebaseAuthentication } from "@/firebase/database";
 import UploadList from '../components/UploadList'
 export default {
-  name: 'Search',
+  name: 'Home',
   components: {
     UploadList
   },
@@ -50,5 +51,19 @@ export default {
     color: #fff;
     padding: 100px 25px;
     font-family: Montserrat, sans-serif;
+  }
+
+  .graph{
+    background-color:#9bacf5;
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+    width: 90%;
+    display: inline-block;
+    margin-left: 5%;
+    border-radius: 25px;
+    padding: 20px;
+    width: 90%;
+    border-style: solid;
+  border-color: #121172;
   }
 </style>

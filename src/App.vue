@@ -18,13 +18,25 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <!--link to each view through routing -->
-        <li><router-link to="/home">HOME</router-link></li>
-        <li><router-link to="/search"> SEARCH</router-link></li>
-        <li><router-link to="/about">ABOUT</router-link></li>
-        <li><router-link to="/graph">GRAPH</router-link></li>
-        <li><router-link to="/contact">CONTACT</router-link></li>
-        <li><router-link to="/login">Login/Register</router-link></li>
-        <li> <a class='click'  @click="logout">Logout</a></li>
+        <div v-if="!user">
+          <ul class="nav navbar-nav navbar-right">
+          <li><router-link to="/home">HOME</router-link></li>
+          <li><router-link to="/about">ABOUT</router-link></li>
+          <li><router-link to="/graph">GRAPH</router-link></li>
+          <li><router-link to="/contact">HELP</router-link></li>
+          <li class="collapse navbar-collapse nav navbar-nav navbar-right" id="hide myNavbar"><router-link to="/login">Login/Register</router-link></li>
+        </ul>
+        </div>
+      <div v-else>
+        <ul class="nav navbar-nav navbar-right">
+          <li><router-link to="/home">HOME</router-link></li>
+          <li><router-link to="/about">ABOUT</router-link></li>
+          <li><router-link to="/graph">GRAPH</router-link></li>
+          <li><router-link to="/contact">HELP</router-link></li> 
+          <li> <a class='click'  @click="logout">Logout</a> </li>
+        </ul>
+      </div>
+      
         
       </ul>
     </div>
@@ -43,26 +55,23 @@
 import {ref} from "vue";
 import { firebaseAuthentication } from "@/firebase/database";
 import { useRouter } from "vue-router";
-
 export default {
-
   setup(){
-
     const user = ref(firebaseAuthentication.currentUser);
-
+    firebaseAuthentication.onAuthStateChanged(thisUser => {
+      user.value = thisUser;
+    });
+    console.log(user.value)
     const router = useRouter();
-    function logout(){
-      firebaseAuthentication.signOut().then(
-        ()=> {
+    const logout = async () => {
+      await firebaseAuthentication.signOut()
           user.value= null;
           router.push("login");// Redirects you to login page 
-        }
-      );
+        
+      
     }
     return {user, logout}
-
   }
-
   
   
 }
@@ -114,7 +123,6 @@ body {
     height: 100%;
     margin-bottom: 10px;
   }
-
   .item h4 {
     font-size: 19px;
     line-height: 1.375em;
@@ -130,14 +138,12 @@ body {
     box-shadow: 5px 0px 40px rgba(0,0,0, .2);
   }
  
-
   .panel-footer {
     background-color: white !important;
   }
   .panel-footer h3 {
     font-size: 32px;
   }
-
   .navbar {
     margin-bottom: 0;
     background-color: #121172;
@@ -160,7 +166,6 @@ body {
     border-color: transparent;
     color: #fff !important;
   }
-
   .slideanim {visibility:hidden;}
   .slide {
     animation-name: slide;
@@ -205,3 +210,5 @@ body {
     }
   }
 </style>
+
+npm

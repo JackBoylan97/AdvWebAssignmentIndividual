@@ -31,6 +31,15 @@
 			<div class="form-group">
 				<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" v-model="email">
 			</div>
+      <div class="form-group">
+				<input type="text" name="address" id="address" class="form-control input-lg" placeholder="Address" v-model="Address">
+			</div>
+      <div class="form-group">
+				<input type="text" name="institutional_affiliation " id="institutional_affiliation " class="form-control input-lg" placeholder="Institutional Affiliation " v-model="institutional_affiliation ">
+			</div>
+      <div class="form-group">
+				<input type="integer" name="phone_number" id="phone_number" class="form-control input-lg" placeholder="Phone Number" v-model="phone_number">
+			</div>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<div class="form-group">
@@ -71,7 +80,7 @@
 
 import {ref, watch} from "vue";
 import { useRouter } from "vue-router";
-import { firebaseAuthentication } from "@/firebase/database";
+import { firebaseAuthentication, firebaseFirestore } from "@/firebase/database";
 
 export default {
   name: 'Register',
@@ -108,6 +117,7 @@ export default {
         displayName: displayName.value,
       };
 
+      console.log(firebaseFirestore)
       if(!errorRegistration.value) {
         firebaseAuthentication
           .createUserWithEmailAndPassword(info.email, info.password)

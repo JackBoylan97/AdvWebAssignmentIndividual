@@ -1,25 +1,27 @@
 <template>
   <div id="uploadForm">
     <form @submit="checkForm($event)">
-      <div>
+      <div class="txt">
         Title:
         <input
+          class="form-control input-sm"
           type="text"
           v-model="submission.uploadTitle"
           name="uploadTitle"
           id="uploadTitle"
         />
       </div>
-      <div>
+      <div class="txt" >
         Details:
         <input
+          class="form-control input-sm"
           type="textarea"
           v-model="submission.uploadDetails"
           name="uploadDetails"
           id="uploadDetails"
         />
       </div>
-      <div>
+      <div class="txt">
         CSV Data:
         <input
           type="file"
@@ -28,15 +30,14 @@
           @change="handleFileChange($event)"
         />
       </div>
-      <div>
-        Here you can add tags such as gene types etc. Seperate your tags by adding a comma, you can 
-        delete tags by simply clicking them. 
-        <input type="text" v-model="submission.tempTag" @keydown="addTag" />
+      <div class="txt">
+        Tags:
+        <input type="text"  class="form-control input-sm" v-model="submission.tempTag" @keydown="addTag" />
       </div>
       <div v-for="tag in submission.tags" :key="tag" class="pill">
         <span @click="deleteTag(tag)">{{ tag }}</span>
       </div>
-      <input type="submit" value="Add" />
+      <input type="submit" class="btn btn-success" value="Add" />
     </form>
   </div>
 </template>
@@ -44,6 +45,10 @@
 <script>
 import Papa from "papaparse";
 import { createSubmission, timestamp } from "../firebase/database";
+import emailjs from 'emailjs-com';
+import {ref} from "vue";
+import {firebaseAuthentication } from "@/firebase/database";
+
 const initForm = {
   uploadTitle: "",
   uploadDetails: "",
@@ -64,6 +69,15 @@ const initForm = {
 };
 export default {
   name: "#uploadForm",
+  setup(){
+
+    const user = ref(firebaseAuthentication.currentUser.email);
+
+
+
+    return {user}
+  },
+
   data() {
     return {
       submission: this.cloneFormData(initForm),
@@ -71,6 +85,7 @@ export default {
     };
   },
   methods: {
+  
     deleteTag(tag) {
       this.submission.tags = this.submission.tags.filter((item) => {
         return tag !== item;
@@ -151,6 +166,13 @@ export default {
 
     async uploadDB() {
       await createSubmission({ ...this.uploadedSubmission });
+      console.log(this.user);
+      console.log(timestamp);
+      var templateParams = {
+            email: this.user,
+            timestamp: timestamp
+            };
+        emailjs.send("service_cswgxab","template_xnxwgk3",templateParams,"user_TfsemkgXGUUnBYOXERVQC");
       return this.uploadedSubmission;
     },
   },
@@ -162,14 +184,36 @@ export default {
   margin: 20px 10px 0 0;
   padding: 6px 12px;
   background: #eee;
-  border-radius: 20px;
-  font-size: 12px;
+  border-radius: 40px;
+  font-size: 5px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: #777;
+  color: rgb(0, 0, 0);
   cursor: pointer;
+  text-align: center;
 }
 .pill:hover {
   background: #ff6666;
+}
+input{
+  align-content: left;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+
+}
+.btn-success{
+background-color: blue;
+}
+.btn-success :hover{
+background-color: rgb(196, 196, 255);
+}
+.txt
+{
+  font-size: 20px;
+  font-style:initial;
+  font-weight:bolder;
+  font-family: sans-serif;
 }
 </style>

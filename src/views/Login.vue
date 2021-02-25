@@ -1,7 +1,7 @@
 <template>
   <div v-if="!user" class="login">
     <div  class="jumbotron text-center">
-  <h1>Login {{ user }} </h1> 
+  <h1> {{ user }} </h1> 
   </div>
   <div class="text-center">
   <div class="container">
@@ -9,7 +9,7 @@
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
 		<form role="form" >
 			<fieldset>
-				<h2>Please Sign In</h2>
+				<h2>Please Sign In or register a new account </h2>
 				<hr class="colorgraph">
 				<div class="form-group">
                     <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" v-model="email">
@@ -25,7 +25,7 @@
 				<hr class="colorgraph">
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6">
-                        <el-button type="submit" @click="login" class="btn btn-lg btn-success btn-block">
+                        <el-button type="submit"  @click="login" class="btn btn-lg btn-success btn-block">
                           Login
                         </el-button>
 					</div>
@@ -129,9 +129,13 @@ export default {
   .colorgraph {
   height: 5px;
   border-top: 0;
-  background: #c4e17f;
+  background: #121172;
   border-radius: 5px;
   background-image: linear-gradient(to right,#6647d8 50%, #6647d8 62.5%, #4e29d4 62.5%, #4e29d4 75%,#669ae1 5%,#669ae1 15%,#669ae1 25%,#669ae1 35%,#669ae1 45%,#669ae1 55%,#669ae1 65%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+.button {
+  background-color:#121172;
 }
 
 </style>
