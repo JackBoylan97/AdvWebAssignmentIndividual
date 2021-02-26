@@ -15,7 +15,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "emailjs-com": "^2.6.4",
-    "firebase": "^8.2.6",
+    "firebase": "^8.2.9",
     "firestore": "^1.1.6",
     "firestore-export-import": "^0.10.0",
     "form-data": "^2.3.3",
